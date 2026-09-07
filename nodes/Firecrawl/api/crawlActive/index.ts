@@ -1,15 +1,23 @@
 import { INodeProperties } from 'n8n-workflow';
-import { buildApiProperties, createOperationNotice } from '../common';
+import { buildApiProperties } from '../common';
 
 export const name = 'crawlActive';
-export const displayName = 'List active crawls';
+export const displayName = 'Get Many Active Crawls';
+export const action = 'Get many active crawls';
+export const description = 'List all crawl jobs currently running for your team';
 export const resourceName = 'Crawling';
 
 function createProperties(): INodeProperties[] {
-	return [createOperationNotice(resourceName, name, 'GET')];
+	return [];
 }
 
-const { options, properties } = buildApiProperties(name, displayName, createProperties());
+const { options, properties } = buildApiProperties(
+	name,
+	displayName,
+	action,
+	description,
+	createProperties(),
+);
 
 options.routing = {
 	request: {
