@@ -305,39 +305,6 @@ function createCrawlOptionsProperty(operationName: string): INodeProperties {
 		default: {},
 		options: [
 			{
-				// The Firecrawl v2 API replaced the `ignoreSitemap` boolean with a `sitemap`
-				// enum ('skip' | 'include' | 'only'), so this field is mapped to `sitemap` at
-				// routing time (`true` -> 'skip', `false` -> omitted)
-				displayName: 'Ignore Sitemap',
-				name: 'ignoreSitemap',
-				type: 'boolean',
-				default: false,
-				description:
-					'Whether to skip reading the website\'s sitemap.xml. Enable if the sitemap is inaccurate, outdated, or you want to discover pages through link following only.',
-				routing: {
-					request: {
-						body: {
-							sitemap: '={{ $value ? "skip" : undefined }}',
-						},
-					},
-				},
-			},
-			{
-				displayName: 'Ignore Query Params',
-				name: 'ignoreQueryParameters',
-				type: 'boolean',
-				default: false,
-				description:
-					'Whether to treat URLs with different query parameters as the same page. Enable to avoid duplicate scrapes of pages like /products?page=1 and /products?page=2.',
-				routing: {
-					request: {
-						body: {
-							ignoreQueryParameters: '={{ $value }}',
-						},
-					},
-				},
-			},
-			{
 				displayName: 'Allow External Links',
 				name: 'allowExternalLinks',
 				type: 'boolean',
@@ -363,6 +330,81 @@ function createCrawlOptionsProperty(operationName: string): INodeProperties {
 					request: {
 						body: {
 							allowSubdomains: '={{ $value }}',
+						},
+					},
+				},
+			},
+			{
+				displayName: 'Ignore Query Params',
+				name: 'ignoreQueryParameters',
+				type: 'boolean',
+				default: false,
+				description:
+					'Whether to treat URLs with different query parameters as the same page. Enable to avoid duplicate scrapes of pages like /products?page=1 and /products?page=2.',
+				routing: {
+					request: {
+						body: {
+							ignoreQueryParameters: '={{ $value }}',
+						},
+					},
+				},
+			},
+			{
+				// Deprecated in node version 1.1+ in favor of the 'Sitemap' option below, which
+				// matches the Map operation and the v2 API specification. Kept as-is for
+				// version 1 workflows.
+				displayName: 'Ignore Sitemap',
+				name: 'ignoreSitemap',
+				type: 'boolean',
+				default: false,
+				description:
+					'Whether to skip reading the website\'s sitemap.xml. Enable if the sitemap is inaccurate, outdated, or you want to discover pages through link following only.',
+				displayOptions: {
+					show: {
+						'@version': [1],
+					},
+				},
+				routing: {
+					request: {
+						body: {
+							ignoreSitemap: '={{ $value }}',
+						},
+					},
+				},
+			},
+			{
+				displayName: 'Sitemap',
+				name: 'sitemap',
+				type: 'options',
+				options: [
+					{
+						name: 'Include',
+						value: 'include',
+						description: 'Use sitemap plus link discovery (default, most comprehensive)',
+					},
+					{
+						name: 'Only',
+						value: 'only',
+						description: 'Only crawl URLs from sitemap.xml (fastest, but may miss pages)',
+					},
+					{
+						name: 'Skip',
+						value: 'skip',
+						description: 'Ignore sitemap, discover pages through links only',
+					},
+				],
+				default: 'include',
+				description:
+					'Control how URLs are discovered. "Include" combines sitemap with link crawling for best coverage. "Only" is fastest but limited to sitemap. "Skip" relies purely on link following.',
+				displayOptions: {
+					show: {
+						'@version': [{ _cnd: { gte: 1.1 } }],
+					},
+				},
+				routing: {
+					request: {
+						body: {
+							sitemap: '={{ $value }}',
 						},
 					},
 				},

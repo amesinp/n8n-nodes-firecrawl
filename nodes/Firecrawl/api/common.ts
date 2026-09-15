@@ -1334,7 +1334,7 @@ export function buildApiProperties(
 	displayName: string,
 	action: string,
 	description: string,
-	properties: INodeProperties[],
+	properties: INodeProperties[] = [],
 ) {
 	const option = createOperationOption(operationName, displayName, action, description);
 	return buildPropertiesWithOptions(option, properties);

@@ -1,4 +1,3 @@
-import { INodeProperties } from 'n8n-workflow';
 import { buildApiProperties } from '../common';
 
 export const name = 'teamQueueStatus';
@@ -7,17 +6,7 @@ export const action = 'Get team queue status';
 export const description = "Get metrics about your team's scrape queue";
 export const resourceName = 'Account';
 
-function createProperties(): INodeProperties[] {
-	return [];
-}
-
-const { options, properties } = buildApiProperties(
-	name,
-	displayName,
-	action,
-	description,
-	createProperties(),
-);
+const { options, properties } = buildApiProperties(name, displayName, action, description);
 
 options.routing = {
 	request: {
