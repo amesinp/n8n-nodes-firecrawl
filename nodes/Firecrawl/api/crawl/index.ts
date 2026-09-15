@@ -305,6 +305,9 @@ function createCrawlOptionsProperty(operationName: string): INodeProperties {
 		default: {},
 		options: [
 			{
+				// The Firecrawl v2 API replaced the `ignoreSitemap` boolean with a `sitemap`
+				// enum ('skip' | 'include' | 'only'), so this field is mapped to `sitemap` at
+				// routing time (`true` -> 'skip', `false` -> omitted)
 				displayName: 'Ignore Sitemap',
 				name: 'ignoreSitemap',
 				type: 'boolean',
@@ -314,7 +317,7 @@ function createCrawlOptionsProperty(operationName: string): INodeProperties {
 				routing: {
 					request: {
 						body: {
-							ignoreSitemap: '={{ $value }}',
+							sitemap: '={{ $value ? "skip" : undefined }}',
 						},
 					},
 				},
