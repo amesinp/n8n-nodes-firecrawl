@@ -4,16 +4,13 @@ import {
 	IExecuteSingleFunctions,
 	IHttpRequestOptions,
 } from 'n8n-workflow';
-import {
-	buildApiProperties,
-	createOperationNotice,
-	createScrapeOptionsProperty,
-	createUrlProperty,
-} from '../common';
+import { buildApiProperties, createScrapeOptionsProperty, createUrlProperty } from '../common';
 
 // Define the operation name and display name
 export const name = 'crawl';
-export const displayName = 'Crawl a website and scrape all pages';
+export const displayName = 'Crawl Website';
+export const action = 'Crawl website';
+export const description = 'Crawl a website and scrape pages based on defined options';
 export const operationName = 'crawl';
 export const resourceName = 'Crawling';
 
@@ -48,7 +45,7 @@ function createExcludePathsProperty(
 						name: 'path',
 						type: 'string',
 						default: '',
-						placeholder: 'blog/*',
+						placeholder: 'e.g. blog/*',
 						description:
 							'Path pattern to exclude (e.g., blog/* will exclude paths like /blog/article-1)',
 					},
@@ -107,7 +104,7 @@ function createIncludePathsProperty(
 						name: 'path',
 						type: 'string',
 						default: '',
-						placeholder: 'blog/*',
+						placeholder: 'e.g. blog/*',
 						description:
 							'Path pattern to include (e.g., blog/* will only include paths like /blog/article-1)',
 					},
@@ -272,6 +269,7 @@ function createPromptProperty(operationName: string): INodeProperties {
 		name: 'prompt',
 		type: 'string',
 		default: '',
+		placeholder: 'e.g. Focus on product pages and pricing information',
 		description:
 			'Natural language instructions to guide the crawl. Use to specify what content to focus on, pages to prioritize, or extraction goals (e.g., "Focus on product pages and pricing information").',
 		routing: {
@@ -452,9 +450,6 @@ function createAdditionalFieldsProperty(operation: string): INodeProperties {
  */
 function createCrawlProperties(): INodeProperties[] {
 	return [
-		// Operation notice
-		createOperationNotice(resourceName, name),
-
 		// URL input
 		createUrlProperty(name, 'https://firecrawl.dev', resourceName),
 
@@ -485,7 +480,13 @@ function createCrawlProperties(): INodeProperties[] {
 }
 
 // Build and export the properties and options
-const { options, properties } = buildApiProperties(name, displayName, createCrawlProperties());
+const { options, properties } = buildApiProperties(
+	name,
+	displayName,
+	action,
+	description,
+	createCrawlProperties(),
+);
 
 // Add the additional fields property separately so it appears only when custom body is enabled
 properties.push(createAdditionalFieldsProperty(name));

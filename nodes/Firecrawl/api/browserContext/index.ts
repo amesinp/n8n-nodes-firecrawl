@@ -8,7 +8,10 @@ import {
 import { buildApiProperties } from '../common';
 
 export const name = 'browserContext';
-export const displayName = 'Browser context';
+export const displayName = 'Get Browser Context';
+export const action = 'Get browser context';
+export const description =
+	'Give an AI agent instructions for the browser tools and a list of active sessions';
 export const operationName = 'browserContext';
 export const resourceName = 'Browser';
 
@@ -89,6 +92,8 @@ function createBrowserContextProperties(): INodeProperties[] {
 const { options, properties } = buildApiProperties(
 	name,
 	displayName,
+	action,
+	description,
 	createBrowserContextProperties(),
 );
 
