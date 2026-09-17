@@ -14,12 +14,12 @@ const name = 'extract';
 const displayName = 'Extract Structured Data';
 const action = 'Extract structured data';
 const description =
-	'Extract structured data using the deprecated Extract API';
+	'Extract structured data (Agent is recommended for new workflows)';
 export const operationName = 'extract';
 export const resourceName = 'Extract';
 
-// The v2 `/extract` endpoint is deprecated in favor of `/agent`, which the docs describe as
-// faster, more reliable, not requiring URLs upfront, and covering all Extract use cases plus more.
+// The docs recommend `/agent` over the v2 `/extract` endpoint as faster, more reliable,
+// not requiring URLs upfront, and covering all Extract use cases plus more.
 const EXTRACT_DEPRECATED_NOTICE_TEXT =
 	`We recommend using the 'Agent → Extract Data With AI Agent' operation instead. It's faster, more reliable, doesn't require URLs, and handles all Extract use cases plus more. <a href="https://docs.firecrawl.dev/developer-guides/usage-guides/choosing-the-data-extractor" target="_blank">Learn more</a>`
 

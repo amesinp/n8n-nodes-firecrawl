@@ -16,7 +16,7 @@ function createSessionIdProperty(): INodeProperties {
 		required: true,
 		default: '',
 		description:
-			'The unique identifier of the browser session to execute code in. Obtain this from the "Create browser session" operation. The session must be active (not expired or destroyed).',
+			'The unique identifier of the browser session to execute code in. Obtain this from the "Create Browser Session" operation. The session must be active (not expired or destroyed).',
 		placeholder: 'e.g. 550e8400-e29b-41d4-a716-446655440000',
 		routing: {
 			request: {

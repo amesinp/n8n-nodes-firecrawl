@@ -292,6 +292,33 @@ function createPromptProperty(operationName: string): INodeProperties {
 }
 
 /**
+ * Creates a notice warning version 1 users that Ignore Sitemap sends a v1-only
+ * parameter, which returns a 400 error if used with the v2 Firecrawl API
+ * @param operationName - The name of the operation
+ * @returns The version 1 Ignore Sitemap notice property
+ */
+function createIgnoreSitemapVersionNoticeProperty(operationName: string): INodeProperties {
+	return {
+		displayName:
+			"Ignore Sitemap isn't supported by the Firecrawl v2 API and will cause a 400 error, even when turned off. Re-add the Firecrawl node to your workflow so you can use the new Sitemap option instead.",
+		name: 'ignoreSitemapVersionNotice',
+		type: 'notice',
+		typeOptions: {
+			theme: 'warning',
+		},
+		default: '',
+		displayOptions: {
+			show: {
+				resource: [resourceName],
+				operation: [operationName],
+				'@version': [1],
+				'/crawlOptions.ignoreSitemap': [{ _cnd: { exists: true } }],
+			},
+		},
+	};
+}
+
+/**
  * Creates the crawl options property
  * @param operationName - The name of the operation
  * @returns The crawl options property
@@ -518,6 +545,9 @@ function createCrawlProperties(): INodeProperties[] {
 
 		// Crawl options
 		createCrawlOptionsProperty(operationName),
+
+		// Version 1 Ignore Sitemap notice
+		createIgnoreSitemapVersionNoticeProperty(operationName),
 
 		// Scrape options
 		createScrapeOptionsProperty(operationName, true, false, resourceName),

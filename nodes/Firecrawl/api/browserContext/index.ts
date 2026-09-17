@@ -11,7 +11,7 @@ export const name = 'browserContext';
 export const displayName = 'Get Browser Context';
 export const action = 'Get browser context';
 export const description =
-	'Give an AI agent instructions for the browser tools and a list of active sessions';
+	'Get usage instructions for the browser tools plus a list of active sessions, for AI agents';
 export const operationName = 'browserContext';
 export const resourceName = 'Browser';
 
